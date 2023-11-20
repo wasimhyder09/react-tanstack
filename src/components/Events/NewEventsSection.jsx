@@ -8,7 +8,9 @@ import { fetchEvents } from '../../util/https.js';
 export default function NewEventsSection() {
   const { data, isPending, isError, error } = useQuery({
     queryKey: ['events'],
-    queryFn: fetchEvents
+    queryFn: fetchEvents,
+    staleTime: 5000, // Time after which a request will be sent.
+    //gcTime: 30000, => Time to store cached data
   });
 
   let content;
