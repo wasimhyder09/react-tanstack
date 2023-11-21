@@ -1,8 +1,11 @@
-export async function fetchEvents({ signal, term }) {
+export async function fetchEvents({ signal, searchTerm }) {
+  console.log(searchTerm);
   let url = 'http://localhost:3000/events';
-  if (term) {
-    url += '?search=' + term;
+
+  if (searchTerm) {
+    url += '?search=' + searchTerm;
   }
+
   const response = await fetch(url, { signal: signal });
 
   if (!response.ok) {
@@ -15,4 +18,26 @@ export async function fetchEvents({ signal, term }) {
   const { events } = await response.json();
 
   return events;
+}
+
+
+export async function createNewEvent(eventData) {
+  const response = await fetch(`http://localhost:3000/events`, {
+    method: 'POST',
+    body: JSON.stringify(eventData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const error = new Error('An error occurred while creating the event');
+    error.code = response.status;
+    error.info = await response.json();
+    throw error;
+  }
+
+  const { event } = await response.json();
+
+  return event;
 }
