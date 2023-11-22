@@ -6,7 +6,7 @@ import EventForm from './EventForm.jsx';
 export default function EditEvent() {
   const navigate = useNavigate();
 
-  function handleSubmit(formData) {}
+  function handleSubmit(formData) { }
 
   function handleClose() {
     navigate('../');
